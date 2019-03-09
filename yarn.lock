@@ -3940,7 +3940,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -4025,11 +4025,36 @@ react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.2:
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
 
+react-native-checkbox-cus@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-checkbox-cus/-/react-native-checkbox-cus-1.0.0.tgz#e5dd36e7f62c2040fb0af791b54cf91eb4bb8859"
+
+react-native-dropdown-menu@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-dropdown-menu/-/react-native-dropdown-menu-2.0.0.tgz#1d9e6614dc3799b79e3151f8a54fb2d83c7d899f"
+  dependencies:
+    prop-types "^15.6.1"
+
+react-native-dropdown-select@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-dropdown-select/-/react-native-dropdown-select-1.0.5.tgz#c4241101120a5b093bf584d3bcfdadbc46a9766e"
+  dependencies:
+    react-native-checkbox-cus "^1.0.0"
+    react-native-stylesheet-adapt "^1.0.2"
+
 react-native-easy-grid@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.1.tgz#23e386db0e4d0d46d7da30f7b628e28cd354d5ad"
   dependencies:
     lodash "4.17.11"
+
+react-native-popup-menu@^0.15.4:
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.15.4.tgz#65630ad1dad797c8f910ae9724504f0f26be82f5"
+
+react-native-stylesheet-adapt@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-stylesheet-adapt/-/react-native-stylesheet-adapt-1.0.2.tgz#17d19b4e8467a5714dfec3d1e010b6781efecaa7"
 
 react-native@0.58.6:
   version "0.58.6"

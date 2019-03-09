@@ -27,7 +27,7 @@ export default class App extends Component {
     return (
       <Provider store={store} >
         <View style={styles.container}>
-          <Text>this is our products</Text>
+          <Text style={styles.text}>this is our products</Text>
           <Product />
         </View>
       </Provider>
@@ -49,5 +49,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#333333",
     marginBottom: 5
+  },
+  text:{
+    marginTop:40,
+    textAlign:'center',
+    color:'white',
+    fontSize:20
   }
 });

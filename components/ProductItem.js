@@ -8,7 +8,7 @@ export default class ProductItem extends Component {
    
   render() {
     const { items } = this.props;
-    console.log("here is item and items are", items);
+    // console.log("here is item and items are", items);
     return (
       <View size={75} style={styles.container}>
         
