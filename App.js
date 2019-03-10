@@ -38,7 +38,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#30336b",
+    backgroundColor: "#c7ecee",
   },
   welcome: {
     fontSize: 20,

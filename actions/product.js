@@ -13,11 +13,13 @@ export const LOAD_SORT_PRODUCT_SUCCESS =
 export const LOAD_SORT_PRODUCT = "LOAD_SORT_PRODUCT";
 
 
-export function loadProductData(data) {
-  console.log("data in action",data)
+
+export function loadProductData(data,order) {
+  
   return {
     type: LOAD_PRODUCT,
-    data
+    data,
+    order
   };
 }
 
@@ -35,24 +37,14 @@ export function loadProductFailure(err) {
 }
 
 
- export function loadSortProductData(data,order){
-   console.log("action and data is",data,order)
+
+ export function setSortBy(data){
+   
   return {
-    type: LOAD_SORT_PRODUCT,
-    data,
-    order
-  };
- }
- export function loadSortProductDataSuccess(data){
-   console.log("this is reOrder result ",data)
-  return {
-    type: LOAD_SORT_PRODUCT_SUCCESS,
+    type: SET_SORTBY,
     data
   };
  }
- export function loadSortProductDataFailure(err){
-  return {
-    type: LOAD_SORT_PRODUCT_FAILURE,
-    err
-  };
- }
+
+
+ 

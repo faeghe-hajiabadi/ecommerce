@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
   FlatList,
-  List,
   ActivityIndicator,
-  Button
+  Button,
+  TouchableOpacity,
+  Image
 } from "react-native";
 import { connect } from "react-redux";
-import { loadProductData,loadSortProductData } from "../actions/product";
+import {
+  loadProductData,
+  setSortBy,
+} from "../actions/product";
 import ProductItem from "./ProductItem";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import DropdownMenu from "react-native-dropdown-menu";
+import { Row } from "react-native-easy-grid";
 
 class Product extends Component {
   constructor(props) {
@@ -21,69 +23,90 @@ class Product extends Component {
     this.state = {
       size: false,
       price: false,
-      id: false
+      id: false,
+      r: 0,
+      totalData: false
     };
   }
   componentDidMount() {
-    this.props.loadProductData(this.props.lastLoadedPageNumber);
-    console.log("this is componentdidmounth");
+    this.props.loadProductData(this.props.lastLoadedPageNumber, 0);
   }
-  sortBy(order){
-    console.log("here is sortby and order is",order)
-    this.props.loadSortProductData(this.props.lastLoadedPageNumber,order);
-  }
-  render() {
-    const { products, loading } = this.props;
-    console.log("this is products in product component:", products);
-    console.log("page:", this.props.lastLoadedPageNumber);
-    let data;
-    if (products) {
-      data = products.map(item => {
-        return <ProductItem items={item} />;
-      });
-    }
-    return (
-      <View>
-        {loading && (
-          <View>
-            <ActivityIndicator size="large" color="white" animating="true" />
-          </View>
-        )}
-        {!loading && (
-          <View>
-            <Text style={styles.text}>sort products by:</Text>
-            <Button
-              onPress={this.sortBy.bind(this,0)}
-              title="size"
-              color="white"
-              
-            />
-              <Button
-              onPress={this.sortBy.bind(this,1)}
-              title="id"
-              color="white"
-              
-            />
-              <Button
-              onPress={this.sortBy.bind(this,2)}
-              title="price"
-              color="white"
-              
-            />
+  sortBy(order) {
+    this.props.setSortBy(this.props.lastLoadedPageNumber, order);
 
-            <FlatList
-              contentContainerStyle={styles.list}
-              data={data}
-              progressViewOffset
-              numColumns={2}
-              renderItem={({ item }) => <Row style={styles.items}>{item}</Row>}
-              onEndReachedThreshold={0.8}
-              onEndReached={({ distanceFromEnd }) => {
-                this.props.loadProductData(this.props.lastLoadedPageNumber + 1);
-              }}
-            />
-          </View>
-        )}
+    this.props.loadProductData(this.props.lastLoadedPageNumber, order);
+  }
+
+  renderFooter = () => {
+    this.setState = { totalData: true };
+    const { ended, lastLoadedPageNumber, products } = this.props;
+    if (!this.props.loading && ended) return null;
+    if (lastLoadedPageNumber >= 50)
+      return (
+        <Text style={{ textAlign: "center", color: "white" }}>
+          End Of catalog
+        </Text>
+      );
+
+    return <ActivityIndicator style={{ color: "#000" }} />;
+  };
+  render() {
+    const { products, loading, lastLoadedPageNumber, ended } = this.props;
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>sort products by:</Text>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={this.sortBy.bind(this, 1)}
+            style={styles.Btn}
+          >
+            <Text> Size </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.Btn}
+            onPress={this.sortBy.bind(this, 2)}
+          >
+            <Text>Id</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.Btn}
+            onPress={this.sortBy.bind(this, 3)}
+          >
+            <Text>price</Text>
+          </TouchableOpacity>
+        </View>
+
+        <FlatList
+          contentContainerStyle={styles.list}
+          data={products}
+          numColumns={2}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => {
+            if (item.url) {
+              return (
+                <Image
+                  style={{ width: "100%", height: "100%" }}
+                  source={{ uri: item.url }}
+                />
+              );
+            }
+            return <ProductItem style={styles.items} items={item} />;
+          }}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={this.renderFooter.bind(this)}
+          onEndReached={({ distanceFromEnd }) => {
+            if (distanceFromEnd < 10) {
+            }
+            {
+              !this.props.loading &&
+                this.props.loadProductData(
+                  this.props.lastLoadedPageNumber + 1,
+                  0
+                );
+            }
+          }}
+        />
       </View>
     );
   }
@@ -91,40 +114,50 @@ class Product extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    flex: 1
   },
   items: {
-    flex: 2,
-    margin: 5,
-    minWidth: 170,
-    maxWidth: 223,
-    height: 304,
-    maxHeight: 304,
     backgroundColor: "#CCC"
   },
   list: {
-    // justifyContent: 'center',
-    flexDirection: "column"
+    // flex:1
   },
   text: {
-    marginTop: 60,
+    marginTop: 40,
     textAlign: "left",
     color: "white",
     fontSize: 20
+  },
+  Btn: {
+    color: "white",
+    borderRadius: 4,
+    borderWidth: 0.5,
+    width: "30%",
+    textAlign: "center",
+    alignItems: "center",
+    padding: 5,
+    margin: 5,
+    marginBottom: 10,
+    borderColor: "#d6d7da",
+    backgroundColor: "#f6e58d"
   }
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadProductData: pageNumber => dispatch(loadProductData(pageNumber)),
-  loadSortProductData: (pageNumber,order) => dispatch(loadSortProductData(pageNumber,order))
+  loadProductData: (pageNumber, order) => {
+    dispatch(loadProductData(pageNumber, order));
+    dispatch(loadAds());
+  },
+  setSortBy: order => dispatch(setSortBy(order)),
+ 
 });
 const mapStateToProps = state => ({
   products: state.products,
   lastLoadedPageNumber: state.archivePage,
-  loading: state.loading
+  loading: state.loading,
+  sortby: state.sortby,
+  ended: state.ended,
+  fetchProducts: state.fetchProducts
 });
 export default connect(
   mapStateToProps,
