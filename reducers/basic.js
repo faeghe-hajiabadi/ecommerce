@@ -6,7 +6,7 @@ export const exampleInitialState = {
   lastUpdate: 0,
   light: false,
   placeholderData: null,
-  // movie: null
+  
 }
 
 export default function basic (state = exampleInitialState, action) {

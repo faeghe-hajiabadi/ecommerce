@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { loadProductData } from "../actions/product";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-
 export default class ProductItem extends Component {
   convertTime(date) {
     var dt = new Date(date);
@@ -22,16 +21,14 @@ export default class ProductItem extends Component {
   }
   render() {
     const { items } = this.props;
-    
+
     return (
-      
       <View size={75} style={styles.container}>
         <Text style={{ fontSize: items.size }}> {items.face}</Text>
         <Text style={styles.id}>id:{items.id}</Text>
         <Text>size:{items.size}</Text>
         <Text>price:{items.price * 0.01}</Text>
         <Text style={styles.date}>Date:{this.convertTime(items.date)}</Text>
-       
       </View>
     );
   }
@@ -52,9 +49,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     margin: 10
   },
- 
+
   date: {
-    
     fontWeight: "300"
   }
 });

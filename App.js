@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  ActivityIndicator
-} from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { Provider } from "react-redux";
-// import { createStore } from "redux";
+
 import product from "./reducers/product";
 import Product from "./components/Product";
-import { Col, Row, Grid } from "react-native-easy-grid";
 
 import { logger } from "redux-logger";
 import { createStore, applyMiddleware } from "redux";
@@ -25,9 +18,10 @@ sagaMiddleware.run(rootSaga);
 export default class App extends Component {
   render() {
     return (
-      <Provider store={store} >
+      <Provider store={store}>
         <View style={styles.container}>
-          <Text style={styles.text}>this is our products</Text>
+          <StatusBar backgroundColor="blue" barStyle="light-content" />
+          <Text style={styles.text}>Emoji Store</Text>
           <Product />
         </View>
       </Provider>
@@ -38,7 +32,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#c7ecee",
+    backgroundColor: "#c7ecee"
   },
   welcome: {
     fontSize: 20,
@@ -50,10 +44,11 @@ const styles = StyleSheet.create({
     color: "#333333",
     marginBottom: 5
   },
-  text:{
-    marginTop:40,
-    textAlign:'center',
-    color:'white',
-    fontSize:20
+  text: {
+    marginTop: 40,
+    textAlign: "center",
+    color: "#4834d4",
+    fontSize: 25,
+    padding: 10
   }
 });

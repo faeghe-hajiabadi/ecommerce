@@ -5,17 +5,21 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  Button,
   TouchableOpacity,
   Image
 } from "react-native";
 import { connect } from "react-redux";
-import {
-  loadProductData,
-  setSortBy,
-} from "../actions/product";
+import { loadProductData, setSortBy } from "../actions/product";
 import ProductItem from "./ProductItem";
-import { Row } from "react-native-easy-grid";
+
+const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+  const paddingToBottom = 20;
+
+  return (
+    layoutMeasurement.height + contentOffset.y >=
+    contentSize.height - paddingToBottom
+  );
+};
 
 class Product extends Component {
   constructor(props) {
@@ -25,7 +29,9 @@ class Product extends Component {
       price: false,
       id: false,
       r: 0,
-      totalData: false
+      totalData: false,
+      tempProduct: [],
+      reachToEnd: false
     };
   }
   componentDidMount() {
@@ -33,25 +39,41 @@ class Product extends Component {
   }
   sortBy(order) {
     this.props.setSortBy(this.props.lastLoadedPageNumber, order);
-
+    this.setState({ tempProduct: "" });
     this.props.loadProductData(this.props.lastLoadedPageNumber, order);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.products.length != prevState.tempProduct.length &&
+      prevState.reachToEnd
+    ) {
+      return {
+        ...prevState,
+        reachToEnd: false,
+        tempProduct: nextProps.products
+      };
+    }
+    if (prevState.tempProduct.length == 0) {
+      return {
+        ...prevState,
+        tempProduct: nextProps.products
+      };
+    } else
+      return {
+        ...prevState
+      };
+  }
+
   renderFooter = () => {
-    this.setState = { totalData: true };
-    const { ended, lastLoadedPageNumber, products } = this.props;
+    const { ended } = this.props;
     if (!this.props.loading && ended) return null;
-    if (lastLoadedPageNumber >= 50)
-      return (
-        <Text style={{ textAlign: "center", color: "white" }}>
-          End Of catalog
-        </Text>
-      );
+    if (ended) return <Text style={styles.endText}>End Of catalog</Text>;
 
     return <ActivityIndicator style={{ color: "#000" }} />;
   };
   render() {
-    const { products, loading, lastLoadedPageNumber, ended } = this.props;
+    const { products, loading } = this.props;
 
     return (
       <View style={styles.container}>
@@ -78,8 +100,7 @@ class Product extends Component {
         </View>
 
         <FlatList
-          contentContainerStyle={styles.list}
-          data={products}
+          data={this.state.tempProduct}
           numColumns={2}
           keyExtractor={item => item.id}
           renderItem={({ item }) => {
@@ -96,16 +117,21 @@ class Product extends Component {
           onEndReachedThreshold={0.5}
           ListFooterComponent={this.renderFooter.bind(this)}
           onEndReached={({ distanceFromEnd }) => {
-            if (distanceFromEnd < 10) {
-            }
             {
-              !this.props.loading &&
+              !loading &&
                 this.props.loadProductData(
                   this.props.lastLoadedPageNumber + 1,
                   0
                 );
             }
           }}
+          onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              this.setState({ tempProduct: products });
+              this.setState({ reachToEnd: true });
+            }
+          }}
+          scrollEventThrottle={400}
         />
       </View>
     );
@@ -119,10 +145,8 @@ const styles = StyleSheet.create({
   items: {
     backgroundColor: "#CCC"
   },
-  list: {
-    // flex:1
-  },
   text: {
+    marginLeft: 10,
     marginTop: 40,
     textAlign: "left",
     color: "white",
@@ -139,17 +163,21 @@ const styles = StyleSheet.create({
     margin: 5,
     marginBottom: 10,
     borderColor: "#d6d7da",
-    backgroundColor: "#f6e58d"
+    backgroundColor: "#f9ca24"
+  },
+  endText: {
+    textAlign: "center",
+    color: "white",
+    backgroundColor: "#95afc0",
+    padding: 10
   }
 });
 
 const mapDispatchToProps = dispatch => ({
   loadProductData: (pageNumber, order) => {
     dispatch(loadProductData(pageNumber, order));
-    dispatch(loadAds());
   },
-  setSortBy: order => dispatch(setSortBy(order)),
- 
+  setSortBy: order => dispatch(setSortBy(order))
 });
 const mapStateToProps = state => ({
   products: state.products,
