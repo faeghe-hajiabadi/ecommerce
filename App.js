@@ -10,6 +10,7 @@ import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas/index";
 
+
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(product, applyMiddleware(sagaMiddleware, logger));
@@ -17,6 +18,7 @@ sagaMiddleware.run(rootSaga);
 
 export default class App extends Component {
   render() {
+    console.log("here is App.js")
     return (
       <Provider store={store}>
         <View style={styles.container}>

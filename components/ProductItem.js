@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { loadProductData } from "../actions/product";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
+
 export default class ProductItem extends Component {
   convertTime(date) {
     var dt = new Date(date);
@@ -20,15 +21,22 @@ export default class ProductItem extends Component {
     }
   }
   render() {
-    const { items } = this.props;
-
+    const { item } = this.props;
+    // const item = {
+    //   date: "Sat Aug 31 2019 11:36:01 GMT+0430 (Iran Daylight Time)",
+    //   face: "( .-. )",
+    //   id: "95168-lb3f8rm2d7q",
+    //   price: 540,
+    //   size: 17,
+    // }
+    console.log("this is item",item)
     return (
-      <View size={75} style={styles.container}>
-        <Text style={{ fontSize: items.size }}> {items.face}</Text>
-        <Text style={styles.id}>id:{items.id}</Text>
-        <Text>size:{items.size}</Text>
-        <Text>price:{items.price * 0.01}</Text>
-        <Text style={styles.date}>Date:{this.convertTime(items.date)}</Text>
+      <View  style={styles.container}>
+        <Text style={{ fontSize: item.size }}> {item.face}</Text>
+        <Text style={styles.id}>id:{item.id}</Text>
+        <Text>size:{item.size}</Text>
+        <Text>price:{item.price * 0.01}</Text>
+        <Text style={styles.date}>Date:{this.convertTime(item.date)}</Text>
       </View>
     );
   }
@@ -36,7 +44,7 @@ export default class ProductItem extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5FCFF",

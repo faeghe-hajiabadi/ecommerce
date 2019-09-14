@@ -5,6 +5,7 @@ import {
   SET_SORTBY
 } from "../actions/product";
 
+
 export const exampleInitialState = {
   products: [],
   loading: true,
@@ -32,12 +33,14 @@ export default function product(state = exampleInitialState, action) {
         loading: true
       };
     case LOAD_PRODUCT_FAILURE:
+
       return {
         ...state,
         loading: false,
         error: action.error
       };
     case LOAD_PRODUCT_SUCCESS:
+        console.log("load-product-action",action.data)
       if (action.data.length === 0) {
         return {
           ...state,
@@ -45,6 +48,7 @@ export default function product(state = exampleInitialState, action) {
         };
       }
       const moreProducts = state.products.concat(action.data);
+      console.log("moreProducts",moreProducts)
       const randomNum = generateRandom(state.uniqueNumber);
 
       moreProducts.push({

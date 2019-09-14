@@ -55,8 +55,10 @@ function fetchDog(action) {
 function* productArchive(action) {
   try {
     const response = yield call(fetchDog, action);
-    const dog = response.data;
-    yield put(loadProductSuccess(dog));
+    const { products } = response.data;
+    console.log("here is saga and response is",products)
+
+    yield put(loadProductSuccess(products));
   } catch (error) {
     yield put(loadProductFailure(error));
   }

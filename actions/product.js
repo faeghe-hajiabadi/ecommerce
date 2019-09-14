@@ -1,3 +1,4 @@
+
 export const LOAD_PRODUCT_FAILURE = "LOAD_PRODUCT_FAILURE";
 export const LOAD_PRODUCT_SUCCESS = "LOAD_PRODUCT_SUCCESS";
 export const LOAD_PRODUCT = "LOAD_PRODUCT";
@@ -9,6 +10,7 @@ export const LOAD_SORT_PRODUCT = "LOAD_SORT_PRODUCT";
 export const SET_SORTBY = "SET_SORTBY";
 
 export function loadProductData(data, order) {
+console.log("here is  loadProductData action ",data,order)
   return {
     type: LOAD_PRODUCT,
     data,
@@ -17,6 +19,7 @@ export function loadProductData(data, order) {
 }
 
 export function loadProductSuccess(data) {
+  console.log("here is  loadProductSuccess action ",data)
   return {
     type: LOAD_PRODUCT_SUCCESS,
     data

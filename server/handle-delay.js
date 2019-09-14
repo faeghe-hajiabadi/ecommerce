@@ -1,3 +1,3 @@
-module.exports = (req, res, next) => {
-    setTimeout(next, 100 + Math.floor(Math.random() * 3000));
+module.exports = (res) => {
+    setTimeout(() => res.end(), 100 + Math.floor(Math.random() * 300));
 };

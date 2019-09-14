@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { loadProductData, setSortBy } from "../actions/product";
 import ProductItem from "./ProductItem";
 
+
 const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
   const paddingToBottom = 20;
 
@@ -25,11 +26,9 @@ class Product extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      size: false,
-      price: false,
-      id: false,
-      r: 0,
-      totalData: false,
+      size: 0,
+      price: 0,
+      id: 0,
       tempProduct: [],
       reachToEnd: false
     };
@@ -74,7 +73,6 @@ class Product extends Component {
   };
   render() {
     const { products, loading } = this.props;
-
     return (
       <View style={styles.container}>
         <Text style={styles.text}>sort products by:</Text>
@@ -112,7 +110,7 @@ class Product extends Component {
                 />
               );
             }
-            return <ProductItem style={styles.items} items={item} />;
+            return <ProductItem item={item} />;
           }}
           onEndReachedThreshold={0.5}
           ListFooterComponent={this.renderFooter.bind(this)}
@@ -127,7 +125,7 @@ class Product extends Component {
           }}
           onScroll={({ nativeEvent }) => {
             if (isCloseToBottom(nativeEvent)) {
-              this.setState({ tempProduct: products });
+              this.setState({ tempProduct: products.products });
               this.setState({ reachToEnd: true });
             }
           }}
@@ -143,7 +141,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   items: {
-    backgroundColor: "#CCC"
+    // backgroundColor: "#CCC"
   },
   text: {
     marginLeft: 10,
