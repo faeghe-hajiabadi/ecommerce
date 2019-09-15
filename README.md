@@ -2,7 +2,8 @@
 
 ====
 
-This is an ecommerce site, where you can buy all sorts of ascii faces like `(ノ・∀・)ノ` and `¯_(ツ)_/¯`, in a wide variety of font sizes. The homepage should display a list of products for people to browse.
+This is an ecommerce site sample, where you can buy all sorts of ascii faces like `(ノ・∀・)ノ` and `¯_(ツ)_/¯`, in a wide variety of font sizes. The homepage should display a list of products for people to browse.
+
 
 
 Features
@@ -30,8 +31,20 @@ FAQ
 
 ### How do I start the app?
 
-1-you need a server to get data from it,so open terminal and cd to server file.
-write npm start to run your sever.
-2-cd to eccomerce with cd ..  then write yarn or npm install to install all packages.
-3-write react-native run-ios .(if you are in mac os you need xcode be installed) or react-native run-android (android SDK or android studio shold be installed).
+1-you need a server to get data from it,so open terminal and cd to server file: 
+```
+   $ npm install
+   $ npm start
+  ```
+2-cd to eccomerce folder, (if you are in mac os you need xcode be installed and android SDK or android studio shold be installed) then:
+```
+   $ npm install
+   $ react-native run-ios
+   ```
+# An Article About How Pagination Works
 
+https://medium.com/@faeghe.hajiabadi/pre-fetch-in-react-native-flatlists-in-the-right-way-cd1fb8237385?sk=441e1d298dcfb758d5568685d5ee1c20
+
+# Screenshots from app:
+ 
+https://github.com/faeghe-hajiabadi/ecommerce/issues/5
