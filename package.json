@@ -12,7 +12,7 @@
     "isomorphic-fetch": "^2.2.1",
     "isomorphic-unfetch": "^3.0.0",
     "react": "16.6.3",
-    "react-native": "0.58.6",
+    "react-native": "0.70.2",
     "react-native-dropdown-menu": "^2.0.0",
     "react-native-dropdown-select": "^1.0.5",
     "react-native-easy-grid": "^0.2.1",
